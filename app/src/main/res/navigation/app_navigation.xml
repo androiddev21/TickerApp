@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/app_navigation"
+    app:startDestination="@id/favouriteTickersFragment">
+
+    <fragment
+        android:id="@+id/favouriteTickersFragment"
+        android:name="com.example.tickerapp.presentation.favourite.FavouriteTickersFragment"
+        android:label="fragment_favourite_tickers"
+        tools:layout="@layout/fragment_favourite_tickers">
+        <action
+            android:id="@+id/action_favouriteTickersFragment_to_searchTickerFragment"
+            app:destination="@id/searchTickerFragment" />
+        <action
+            android:id="@+id/action_favouriteTickersFragment_to_tickerDetailsFragment"
+            app:destination="@id/tickerDetailsFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/searchTickerFragment"
+        android:name="com.example.tickerapp.presentation.search.SearchTickerFragment"
+        android:label="fragment_search_ticker"
+        tools:layout="@layout/fragment_search_ticker">
+        <action
+            android:id="@+id/action_searchTickerFragment_to_tickerDetailsFragment"
+            app:destination="@id/tickerDetailsFragment"
+            app:popUpTo="@id/favouriteTickersFragment"
+            app:popUpToInclusive="false" />
+    </fragment>
+    <fragment
+        android:id="@+id/tickerDetailsFragment"
+        android:name="com.example.tickerapp.presentation.details.TickerDetailsFragment"
+        android:label="fragment_ticker_details"
+        tools:layout="@layout/fragment_ticker_details" >
+        <argument
+            android:name="ticker"
+            app:argType="com.example.tickerapp.presentation.model.TickerUI" />
+    </fragment>
+</navigation>

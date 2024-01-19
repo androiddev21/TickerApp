@@ -1,0 +1,14 @@
+<resources>
+    <string name="app_name">TickerApp</string>
+    <string name="favourite_tickers">Favourite tickers ⭐</string>
+    <string name="search_tickers">Search tickers 🔎</string>
+    <string name="ticker_details">Ticker details 📊</string>
+    <string name="ticker_pattern">Ticker %s</string>
+    <string name="ticker_name_pattern">Name %s</string>
+    <string name="add_to_favourites">Add to ⭐</string>
+    <string name="remove_from_favourites">Remove\nfrom ⭐</string>
+    <string name="input_ticker_name">Input ticker name</string>
+    <string name="market">Market:</string>
+    <string name="homepage">Homepage:</string>
+    <string name="no_tickers_yet">No tickers yet 🥲</string>
+</resources>
