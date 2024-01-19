@@ -2,6 +2,7 @@ package com.example.tickerapp.di
 
 import com.example.tickerapp.BuildConfig
 import com.example.tickerapp.data.remote.ApiService
+import com.skydoves.retrofit.adapters.result.ResultCallAdapterFactory
 import okhttp3.Interceptor
 import okhttp3.OkHttpClient
 import org.kodein.di.DI
@@ -18,6 +19,7 @@ val retrofitModule = DI.Module("retrofit") {
         Retrofit.Builder()
             .baseUrl(RETROFIT_URL)
             .addConverterFactory(GsonConverterFactory.create())
+            .addCallAdapterFactory(ResultCallAdapterFactory.create())
             .client(
                 OkHttpClient.Builder()
                     .addInterceptor { apiKeyAsQuery(it) }
@@ -32,7 +34,7 @@ private fun apiKeyAsQuery(chain: Interceptor.Chain) = chain.proceed(
     chain.request()
         .newBuilder()
         .url(
-            chain.request().url().newBuilder()
+            chain.request().url.newBuilder()
                 .addQueryParameter(API_KEY_PARAM, BuildConfig.POLYGON_IO_API_KEY).build()
         )
         .build()

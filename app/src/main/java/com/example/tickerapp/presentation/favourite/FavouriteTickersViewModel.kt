@@ -56,7 +56,7 @@ class FavouriteTickersViewModel(application: Application) : AndroidViewModel(app
 
     private fun onRemoveFromFavourites(ticker: String) {
         viewModelScope.launch {
-            repository.deleteTicker(ticker)
+            repository.deleteFavouriteTicker(ticker)
             val tickers = repository
                 .getFavouriteTickers()
                 .map { it.toUI() }

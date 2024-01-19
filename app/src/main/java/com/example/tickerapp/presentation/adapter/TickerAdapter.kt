@@ -95,8 +95,8 @@ class TickerAdapter(
     ) {
         with(binding) {
             val context = binding.root.context
-            ticker.text = context.getString(R.string.ticker_pattern, item.ticker)
-            name.text = context.getString(R.string.ticker_name_pattern, item.name)
+            tickerValue.text = context.getString(R.string.ticker_pattern, item.ticker)
+            tickerNameValue.text = context.getString(R.string.ticker_name_pattern, item.name)
         }
     }
 
@@ -105,8 +105,8 @@ class TickerAdapter(
     ) {
         with(binding) {
             val context = binding.root.context
-            ticker.text = context.getString(R.string.ticker_pattern, item.ticker)
-            name.text = context.getString(R.string.ticker_name_pattern, item.name)
+            tickerValue.text = context.getString(R.string.ticker_pattern, item.ticker)
+            tickerNameValue.text = context.getString(R.string.ticker_name_pattern, item.name)
         }
     }
 

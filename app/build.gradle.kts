@@ -67,7 +67,6 @@ dependencies {
     implementation("androidx.lifecycle:lifecycle-viewmodel-ktx:2.7.0")
     implementation("androidx.lifecycle:lifecycle-runtime-ktx:2.7.0")
     implementation("androidx.recyclerview:recyclerview:1.3.2")
-    implementation("com.github.bumptech.glide:glide:4.16.0")
     implementation("com.google.code.gson:gson:2.10.1")
     implementation ("androidx.recyclerview:recyclerview:1.3.2")
     implementation("androidx.room:room-runtime:2.6.1")
@@ -78,4 +77,5 @@ dependencies {
     implementation("com.squareup.retrofit2:converter-gson:2.9.0")
     implementation("org.kodein.di:kodein-di-framework-android-core:7.19.0")
     implementation("org.kodein.di:kodein-di-framework-android-x-viewmodel:7.19.0")
+    implementation ("com.github.skydoves:retrofit-adapters-result:1.0.9")
 }

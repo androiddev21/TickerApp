@@ -8,3 +8,8 @@ data class Ticker(
     @SerializedName("name")
     val name: String
 )
+
+data class TickersList(
+    @SerializedName("results")
+    val list: List<Ticker>
+)

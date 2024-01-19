@@ -3,8 +3,8 @@ package com.example.tickerapp.data.repository
 import com.example.tickerapp.data.local.TickerDao
 import com.example.tickerapp.data.local.model.FavouriteTicker
 import com.example.tickerapp.data.remote.ApiService
-import com.example.tickerapp.data.remote.model.Ticker
-import com.example.tickerapp.data.remote.model.TickerDetails
+import com.example.tickerapp.data.remote.model.TickerDetailsResults
+import com.example.tickerapp.data.remote.model.TickersList
 
 class TickerRepositoryImpl(
     private val tickerDao: TickerDao,
@@ -15,19 +15,23 @@ class TickerRepositoryImpl(
         return tickerDao.getFavouriteTickers()
     }
 
-    override suspend fun insertTicker(ticker: FavouriteTicker) {
-        tickerDao.insertTicker(ticker)
+    override suspend fun getFavouriteTicker(ticker: String): FavouriteTicker? {
+        return tickerDao.getFavouriteTicker(ticker)
     }
 
-    override suspend fun deleteTicker(ticker: String) {
-        tickerDao.deleteTicker(ticker)
+    override suspend fun insertFavouriteTicker(ticker: FavouriteTicker) {
+        tickerDao.insertFavouriteTicker(ticker)
     }
 
-    override suspend fun getAllTickers(): List<Ticker> {
+    override suspend fun deleteFavouriteTicker(ticker: String) {
+        tickerDao.deleteFavouriteTicker(ticker)
+    }
+
+    override suspend fun getAllTickers(): Result<TickersList> {
         return apiService.getTickers()
     }
 
-    override suspend fun getTickerDetails(ticker: String): TickerDetails {
+    override suspend fun getTickerDetails(ticker: String): Result<TickerDetailsResults> {
         return apiService.getTickerDetails(ticker)
     }
 }

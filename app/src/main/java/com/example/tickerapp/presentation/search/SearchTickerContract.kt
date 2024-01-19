@@ -26,5 +26,7 @@ interface SearchTickerContract {
     sealed interface Action {
         data object NavigateBack : Action
         class NavigateToTickerDetails(val ticker: TickerUI) : Action
+        data object ShowTickerAlreadyAddedAlert : Action
+        data object ShowSomethingWentWrongAlert : Action
     }
 }

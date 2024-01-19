@@ -15,36 +15,48 @@
         app:navigationIcon="@drawable/ic_arrow_back"
         app:title="@string/ticker_details" />
 
-    <ImageView
-        android:id="@+id/icon"
-        android:layout_width="100dp"
-        android:layout_height="100dp"
-        android:layout_margin="@dimen/base_margin"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/toolbar"
-        tools:ignore="ContentDescription"
-        tools:src="@tools:sample/avatars" />
-
     <com.google.android.material.textview.MaterialTextView
         android:id="@+id/ticker"
-        android:layout_width="0dp"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_margin="@dimen/base_margin"
+        android:text="@string/ticker"
         android:textSize="@dimen/base_text_size"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/toolbar" />
+
+    <com.google.android.material.textview.MaterialTextView
+        android:id="@+id/tickerValue"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="@dimen/base_margin"
+        android:textSize="@dimen/base_text_size"
+        app:layout_constraintBottom_toBottomOf="@id/ticker"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@id/icon"
-        app:layout_constraintTop_toTopOf="@id/icon"
+        app:layout_constraintStart_toEndOf="@id/barrier"
+        app:layout_constraintTop_toTopOf="@id/ticker"
         tools:text="Ticker" />
 
     <com.google.android.material.textview.MaterialTextView
         android:id="@+id/tickerName"
-        android:layout_width="0dp"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_margin="@dimen/base_margin"
+        android:text="@string/name"
         android:textSize="@dimen/base_text_size"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/ticker" />
+
+    <com.google.android.material.textview.MaterialTextView
+        android:id="@+id/tickerNameValue"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="@dimen/base_margin"
+        android:textSize="@dimen/base_text_size"
+        app:layout_constraintBottom_toBottomOf="@id/tickerName"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@id/icon"
-        app:layout_constraintTop_toBottomOf="@id/ticker"
+        app:layout_constraintStart_toEndOf="@id/barrier"
+        app:layout_constraintTop_toTopOf="@id/tickerName"
         tools:text="Ticker name" />
 
     <androidx.constraintlayout.widget.Barrier
@@ -62,7 +74,7 @@
         android:text="@string/market"
         android:textSize="@dimen/base_text_size"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/icon" />
+        app:layout_constraintTop_toBottomOf="@id/tickerName" />
 
     <com.google.android.material.textview.MaterialTextView
         android:id="@+id/marketValue"
@@ -98,12 +110,34 @@
         app:layout_constraintTop_toTopOf="@id/homepage"
         tools:text="some info" />
 
+    <com.google.android.material.textview.MaterialTextView
+        android:id="@+id/phone"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/base_margin"
+        android:text="@string/phone"
+        android:textSize="@dimen/base_text_size"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/homepage" />
+
+    <com.google.android.material.textview.MaterialTextView
+        android:id="@+id/phoneValue"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="@dimen/base_margin"
+        android:textSize="@dimen/base_text_size"
+        app:layout_constraintBottom_toBottomOf="@id/phone"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/barrier"
+        app:layout_constraintTop_toTopOf="@id/phone"
+        tools:text="some info" />
+
     <com.google.android.material.button.MaterialButton
-        android:id="@+id/buttonRemove"
+        android:id="@+id/buttonFavAction"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_margin="@dimen/base_margin"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/homepage"
+        app:layout_constraintTop_toBottomOf="@id/phone"
         tools:text="@string/remove_from_favourites" />
 </androidx.constraintlayout.widget.ConstraintLayout>

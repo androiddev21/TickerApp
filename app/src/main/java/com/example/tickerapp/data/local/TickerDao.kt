@@ -11,9 +11,12 @@ interface TickerDao {
     @Query("SELECT * FROM favourite_tickers")
     suspend fun getFavouriteTickers(): List<FavouriteTicker>
 
+    @Query("SELECT * FROM favourite_tickers WHERE ticker == :ticker")
+    suspend fun getFavouriteTicker(ticker: String): FavouriteTicker?
+
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun insertTicker(ticker: FavouriteTicker)
+    suspend fun insertFavouriteTicker(ticker: FavouriteTicker)
 
     @Query("DELETE FROM favourite_tickers WHERE ticker == :ticker")
-    suspend fun deleteTicker(ticker: String)
+    suspend fun deleteFavouriteTicker(ticker: String)
 }

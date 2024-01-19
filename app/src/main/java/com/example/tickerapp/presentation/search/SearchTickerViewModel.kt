@@ -6,11 +6,12 @@ import androidx.lifecycle.viewModelScope
 import com.example.tickerapp.data.local.model.FavouriteTicker
 import com.example.tickerapp.data.remote.model.Ticker
 import com.example.tickerapp.data.repository.TickerRepository
-import com.example.tickerapp.presentation.search.SearchTickerContract
 import com.example.tickerapp.presentation.model.TickerUI
 import com.example.tickerapp.presentation.search.SearchTickerContract.Action
 import com.example.tickerapp.presentation.search.SearchTickerContract.Action.NavigateBack
 import com.example.tickerapp.presentation.search.SearchTickerContract.Action.NavigateToTickerDetails
+import com.example.tickerapp.presentation.search.SearchTickerContract.Action.ShowSomethingWentWrongAlert
+import com.example.tickerapp.presentation.search.SearchTickerContract.Action.ShowTickerAlreadyAddedAlert
 import com.example.tickerapp.presentation.search.SearchTickerContract.State
 import com.example.tickerapp.presentation.search.SearchTickerContract.ViewEvent
 import com.example.tickerapp.presentation.search.SearchTickerContract.ViewEvent.AddToFavourites
@@ -41,7 +42,8 @@ class SearchTickerViewModel(application: Application) : AndroidViewModel(applica
     private val _action: MutableSharedFlow<Action> = MutableSharedFlow()
     override val action: SharedFlow<Action> = _action.asSharedFlow()
 
-    private val addedTickers: MutableSet<TickerUI> = mutableSetOf()
+    private val cachedAddedTickers: MutableSet<TickerUI> = mutableSetOf()
+    private val cachedTickersList: MutableList<TickerUI> = mutableListOf()
 
     override fun viewEvent(viewEvent: ViewEvent) {
         when (viewEvent) {
@@ -56,20 +58,38 @@ class SearchTickerViewModel(application: Application) : AndroidViewModel(applica
 
     private fun onSearchTickerByName(searchQuery: String) {
         viewModelScope.launch {
-            val tickers = repository
-                .getAllTickers()
-                .map { it.toUI() }
-                .filter { it.name == searchQuery && !addedTickers.contains(it) }
-            _state.emit(State(tickers = tickers))
+            if (cachedTickersList.isEmpty()) {
+                val tickers = getAllTickers()
+                if (tickers.isNullOrEmpty()) {
+                    _action.emit(ShowSomethingWentWrongAlert)
+                } else {
+                    cachedTickersList.addAll(
+                        tickers.map { it.toUI() }
+                    )
+                    _state.emit(State(tickers = cachedTickersList.filter(searchQuery)))
+                }
+            } else {
+                _state.emit(State(tickers = cachedTickersList.filter(searchQuery)))
+            }
         }
+    }
+
+    private suspend fun getAllTickers(): List<Ticker>? {
+        val result = repository.getAllTickers()
+        return result.getOrNull()?.list
     }
 
     private fun onAddToFavourites(ticker: TickerUI) {
         viewModelScope.launch {
-            addedTickers.add(ticker)
-            repository.insertTicker(ticker.toLocal())
-            val tickers = _state.value.tickers.filter { !addedTickers.contains(it) }
-            _state.emit(State(tickers = tickers))
+            val isAlreadyAdded = repository.getFavouriteTicker(ticker.ticker) != null
+            if (isAlreadyAdded) {
+                _action.emit(ShowTickerAlreadyAddedAlert)
+            } else {
+                cachedAddedTickers.add(ticker)
+                repository.insertFavouriteTicker(ticker.toLocal())
+                val tickers = _state.value.tickers.filter { !cachedAddedTickers.contains(it) }
+                _state.emit(State(tickers = tickers))
+            }
         }
     }
 
@@ -85,18 +105,11 @@ class SearchTickerViewModel(application: Application) : AndroidViewModel(applica
         }
     }
 
-    private fun FavouriteTicker.toUI() =
-        TickerUI(
-            ticker = ticker,
-            name = name,
-            isFavourite = true
-        )
-
     private fun Ticker.toUI() =
         TickerUI(
             ticker = ticker,
             name = name,
-            isFavourite = true
+            isFavourite = false
         )
 
     private fun TickerUI.toLocal() =
@@ -104,4 +117,8 @@ class SearchTickerViewModel(application: Application) : AndroidViewModel(applica
             ticker = ticker,
             name = name
         )
+
+    private fun List<TickerUI>.filter(searchQuery: String) = filter {
+        it.name.contains(searchQuery, ignoreCase = true) && !cachedAddedTickers.contains(it)
+    }
 }
